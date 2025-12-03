@@ -1,0 +1,5 @@
+{
+  "watch": ["src"],
+  "ext": "js,json",
+  "exec": "node --inspect=0.0.0.0:9229 src/app.js"
+}
