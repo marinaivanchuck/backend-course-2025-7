@@ -1,37 +1,39 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  # 1. Сервіс Бази Даних (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: backend_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init_db:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    # Додаємо env_file, щоб БД також могла бачити змінні
+    env_file:
+      - .env
+  
+  # 2. Сервіс Веб-застосунку
   app:
     build: .
     container_name: backend_app
     ports:
-      - "3000:3000"
-      - "9229:9229"
-    environment:
-      - PORT=3000
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=appdb
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
+      - "${PORT}:${PORT}"
+      - "9229:9229" # Порт для відлагодження
     depends_on:
       - db
-
-  db:
-    image: postgres:15-alpine
-    container_name: backend_db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: appdb
-    ports:
-      - "5432:5432"
+    env_file:
+      - .env
     volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./init_db:/docker-entrypoint-initdb.d/
+      - .:/usr/src/app
+      - /usr/src/app/node_modules # 💡 ВИПРАВЛЕННЯ: Ізолюємо node_modules
+    command: nodemon --legacy-watch --inspect=0.0.0.0:9229 src/app.js
 
+# Визначаємо назву Volume для збереження даних БД
 volumes:
   db-data:

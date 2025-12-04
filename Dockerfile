@@ -1,14 +1,24 @@
+# Dockerfile
+
 FROM node:18-alpine
 
+# Створюємо робочу директорію
 WORKDIR /usr/src/app
 
+# Копіюємо package.json та package-lock.json
 COPY package*.json ./
-RUN npm ci --only=production
 
+# Встановлюємо ВСІ залежності (включаючи production і development)
+RUN npm ci
+
+# Встановлюємо nodemon глобально
+RUN npm install -g nodemon
+
+# Копіюємо решту файлів (включно з src/ та .env.sample)
 COPY . .
 
-RUN npm install --no-save nodemon
+# Визначаємо, який порт використовує контейнер
+EXPOSE 3000
 
-EXPOSE 3000 9229
-
-CMD ["npx", "nodemon", "--inspect=0.0.0.0:9229", "--watch", "src", "src/app.js"]
+# Команда запуску за замовчуванням 
+CMD ["node", "src/app.js"]
