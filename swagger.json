@@ -1,0 +1,134 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Inventory Service API",
+    "version": "1.0.0",
+    "description": "Swagger documentation for Lab 6 inventory service"
+  },
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Register new inventory item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "inventory_name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "photo": { "type": "string", "format": "binary" }
+                },
+                "required": ["inventory_name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" }
+        }
+      }
+    },
+    "/inventory": {
+      "get": {
+        "summary": "Get all inventory items",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/inventory/{id}": {
+      "get": {
+        "summary": "Get inventory item by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, 
+"schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" }, "404": { 
+"description": "Not Found" } }
+      },
+      "put": {
+        "summary": "Update inventory item",
+        "parameters": [{ "name": "id", "in": "path", "required": true, 
+"schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "inventory_name": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Updated" }, "404": { 
+"description": "Not Found" } }
+      },
+      "delete": {
+        "summary": "Delete inventory item",
+        "parameters": [{ "name": "id", "in": "path", "required": true, 
+"schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Deleted" }, "404": { 
+"description": "Not Found" } }
+      }
+    },
+    "/inventory/{id}/photo": {
+      "get": {
+        "summary": "Get inventory photo",
+        "parameters": [{ "name": "id", "in": "path", "required": true, 
+"schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "Image", "content": { "image/jpeg": { 
+"schema": { "type": "string", "format": "binary" } } } },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "summary": "Update inventory photo",
+        "parameters": [{ "name": "id", "in": "path", "required": true, 
+"schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": { "photo": { "type": "string", "format": 
+"binary" } },
+                "required": ["photo"]
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Updated" }, "400": { 
+"description": "Bad Request" }, "404": { "description": "Not Found" } }
+      }
+    },
+    "/search": {
+      "post": {
+        "summary": "Search inventory item by ID",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "has_photo": { "type": "string", "description": 
+"optional checkbox" }
+                },
+                "required": ["id"]
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "OK" }, "404": { 
+"description": "Not Found" } }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,77 @@
+{
+  "info": {
+    "name": "Inventory Service - Lab6",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "host", "value": "127.0.0.1" },
+    { "key": "port", "value": "3000" },
+    { "key": "id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "POST /register (form-data)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "inventory_name", "value": "Test item", "type": "text" },
+            { "key": "description", "value": "Test description", "type": "text" },
+            { "key": "photo", "type": "file", "src": "" }
+          ]
+        },
+        "url": { "raw": "http://{{host}}:{{port}}/register", "host": ["{{host}}"], "port": "{{port}}", "path": ["register"] }
+      }
+    },
+    {
+      "name": "GET /inventory",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://{{host}}:{{port}}/inventory", "host": ["{{host}}"], "port": "{{port}}", "path": ["inventory"] }
+      }
+    },
+    {
+      "name": "GET /inventory/:id",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://{{host}}:{{port}}/inventory/{{id}}", "host":["{{host}}"], "port":"{{port}}", "path": ["inventory","{{id}}"] }
+      }
+    },
+    {
+      "name": "PUT /inventory/:id (JSON)",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key":"Content-Type", "value":"application/json" }],
+        "body": { "mode":"raw", "raw": "{ \"name\": \"Updated name\", \"description\": \"Updated\" }" },
+        "url": { "raw": "http://{{host}}:{{port}}/inventory/{{id}}", "host":["{{host}}"], "port":"{{port}}", "path": ["inventory","{{id}}"] }
+      }
+    },
+    {
+      "name": "GET /inventory/:id/photo",
+      "request": { "method": "GET", "url": { "raw": "http://{{host}}:{{port}}/inventory/{{id}}/photo", "host":["{{host}}"], "port":"{{port}}", "path":["inventory","{{id}}","photo"] } }
+    },
+    {
+      "name": "PUT /inventory/:id/photo (form-data)",
+      "request": {
+        "method": "PUT",
+        "body": { "mode":"formdata", "formdata":[ { "key":"photo","type":"file","src":"" } ] },
+        "url": { "raw": "http://{{host}}:{{port}}/inventory/{{id}}/photo", "host":["{{host}}"], "port":"{{port}}", "path":["inventory","{{id}}","photo"] }
+      }
+    },
+    {
+      "name": "DELETE /inventory/:id",
+      "request": { "method":"DELETE", "url": { "raw":"http://{{host}}:{{port}}/inventory/{{id}}", "host":["{{host}}"], "port":"{{port}}", "path":["inventory","{{id}}"] } }
+    },
+    {
+      "name": "POST /search (x-www-form-urlencoded)",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/x-www-form-urlencoded"}],
+        "body":{"mode":"urlencoded","urlencoded":[{"key":"id","value":"{{id}}","type":"text"},{"key":"has_photo","value":"on","type":"text"}]},
+        "url":{"raw":"http://{{host}}:{{port}}/search","host":["{{host}}"],"port":"{{port}}","path":["search"]}
+      }
+    }
+  ]
+}
