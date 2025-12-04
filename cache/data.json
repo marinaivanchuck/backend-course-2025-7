@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "id": "8228143b-59eb-474a-9d35-5bdbfd26d6e0",
+      "inventory_name": "Вебпрограмування",
+      "description": "Створення сайтів",
+      "photo": "/inventory/8228143b-59eb-474a-9d35-5bdbfd26d6e0/photo",
+      "created_at": "2025-11-14T09:01:08.991Z"
+    },
+    {
+      "id": "d6ae8479-a6a0-4eeb-a6c7-f907ef6d57e0",
+      "inventory_name": "Вебпрограмування",
+      "description": "Створення сайтів",
+      "photo": "/inventory/d6ae8479-a6a0-4eeb-a6c7-f907ef6d57e0/photo",
+      "created_at": "2025-11-20T17:44:21.266Z"
+    }
+  ]
+}
